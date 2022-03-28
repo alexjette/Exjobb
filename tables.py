@@ -3,8 +3,8 @@ import pandas as pd
 from pandas_datareader import data as wb
 
 # Hämtar excelfilerna
-article_data = pd.read_excel('/Users/alexjette/Documents/Exjobb/Articles.xlsx')
-boxes_data = pd.read_excel('/Users/alexjette/Documents/Exjobb/Boxes.xlsx')
+article_data = pd.read_excel('Articles.xlsx') #/Users/alexjette/Documents/Exjobb/
+boxes_data = pd.read_excel('Boxes.xlsx')
 
 # Gör excelfilerna till pandas.DataFrame
 article_df = pd.DataFrame(article_data)
@@ -68,8 +68,8 @@ for index, row in boxes_df.iterrows():
             #print('NOT OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
 
 # Printar matriserna
-#print(allowedPackaging)
-#print(utilization)
+print(allowedPackaging)
+print(utilization)
 
 #Skapar random partDemand och packaging tills vi fått datan
 import random
