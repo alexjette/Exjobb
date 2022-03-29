@@ -1,6 +1,7 @@
 from tables import allowedPackaging
 from tables import utilization
 from tables import packaging
+from facility import usedPackagingMatrix
 import xlsxwriter as xl
 import pandas as pd
 import numpy as np
@@ -13,6 +14,8 @@ for p in packaging:
     row.append(f'Box {packaging[c]}')
     c += 1
 
+usedPackagingMatrix_1 = pd.DataFrame(usedPackagingMatrix, columns=col)
+usedPackagingMatrix_1.index = row
 checkPackaging = pd.DataFrame(allowedPackaging, columns=col)
 checkPackaging.index = row
 utilizationTable = pd.DataFrame(utilization, columns=col)
@@ -28,7 +31,7 @@ def create_woorkbook():
     #workbook = xl.Workbook('XTR_box.xlsx')
     checkPackaging.to_excel(workbook, sheet_name='Check Packaging', index=row)
     utilizationTable.to_excel(workbook, sheet_name='Utilization Table', index=row)
-
+    usedPackagingMatrix_1.to_excel(workbook, sheet_name='Used Packaging Table', index=row)
     # for p in packagingRange:
     #     a = a + 1
     #     sheet_name = str(packagingRange[a])
