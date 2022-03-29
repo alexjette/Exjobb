@@ -3,7 +3,7 @@ import pandas as pd
 from pandas_datareader import data as wb
 
 # Hämtar excelfilerna
-article_data = pd.read_excel('Articles.xlsx')
+article_data = pd.read_excel('Articles_urval.xlsx')
 boxes_data = pd.read_excel('Boxes.xlsx', 'All packaging') # Standard packaging
 
 # Gör excelfilerna till pandas.DataFrame
@@ -73,8 +73,8 @@ for index, row in boxes_df.iterrows():
 
 articles = np.array(article_df['Articles'])
 packaging = np.array(boxes_df['Boxes'])
-print(f'Articles: {articles}')
-print(f'Packaging: {packaging}')
+#print(f'Articles: {articles}')
+#print(f'Packaging: {packaging}')
 
 pi = 0
 partDemand = []

@@ -11,21 +11,24 @@ from tables import allowedPackaging
 from tables import utilization
 from tables import partDemand
 from tables import packaging
+from tables import article_df
 
 # Range of plants and warehouses
 num_packaging = len(packaging)
-num_parts = len(partDemand)
-n = 5
+num_parts = len(article_df)
+#num_parts = len(partDemand)
+n = 2
 
 # Model
 m = gp.Model("facility")
+#m.setParam('TimeLimit', 100)
 
 # Packaging decision variables: openPackaging[l] == 1 if packaging l is used.
 openPackaging = m.addVars(num_packaging,
                  vtype=GRB.BINARY,
                  name="open")
 # Used packaging decision variables: usedPackagingMatrix[l,k] == 1 if part k use packaging l
-usedPackagingMatrix = m.addMVar((num_packaging,num_parts),vtype=GRB.BINARY, name="utilization rate")
+usedPackagingMatrix = m.addMVar((num_packaging,num_parts),vtype=GRB.BINARY, name="utilization_rate")
 
 # objective
 
@@ -85,9 +88,11 @@ print('SOLUTION:')
 for l in range(num_packaging):
     if openPackaging[l].X > 0.99:
         print('Packaging %s used' % packaging[l])
-        for k in range(num_parts):
-            if usedPackagingMatrix[l,k].X > 0:
-                print('  Part %g use packaging %s' %
-                      (k, packaging[l]))
-    else:
-        print('Packaging %s not used!' % packaging[l])
+#        print('  Parts in packaging %s : %g' %
+#                      (packaging[l], gp.quicksum(usedPackagingMatrix[l,k] for k in range(num_parts))
+        #for k in range(num_parts):
+        #    if usedPackagingMatrix[l,k].X > 0:
+        #        print('  Part %g use packaging %s' %
+        #              (k, packaging[l]))
+    #else:
+    #    print('Packaging %s not used!' % packaging[l])
