@@ -34,7 +34,8 @@ m.ModelSense = gp.GRB.MAXIMIZE
 
 # The objective function takes into consideration the utilizations and allowed packaging
 obj1 = gp.quicksum(openPackaging[l]*usedPackagingMatrix[l,k]*utilization[l,k]*allowedPackaging[l,k] for l in range(num_packaging) for k in range(num_parts))
-m.setObjective(obj1)
+obj2 = gp.quicksum(openPackaging[l] for l in range(num_packaging))
+m.setObjective(obj1-obj2*0.00000001)
 
 #constraints
 
