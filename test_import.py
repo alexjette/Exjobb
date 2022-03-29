@@ -1,6 +1,7 @@
 from tables import allowedPackaging
 from tables import utilization
 from tables import packaging
+from tables import articles
 from facility import usedPackagingMatrix
 import xlsxwriter as xl
 import pandas as pd
@@ -8,38 +9,38 @@ import numpy as np
 
 col = []
 row = []
-c = 0
-for p in packaging:
-    col.append(f'Part {packaging[c]}')
-    row.append(f'Box {packaging[c]}')
-    c += 1
+col_index = 0
+row_index = 0
 
-usedPackagingMatrix_1 = pd.DataFrame(usedPackagingMatrix, columns=col)
+for a in articles:
+    col.append(f'Article {str(articles[col_index])}')
+    col_index += 1
+
+for p in packaging:
+    row.append(f'Box {str(packaging[row_index])}')
+    row_index += 1
+
+usedPackagingMatrix_1 = pd.DataFrame(usedPackagingMatrix.x, columns=col)
 usedPackagingMatrix_1.index = row
 checkPackaging = pd.DataFrame(allowedPackaging, columns=col)
 checkPackaging.index = row
 utilizationTable = pd.DataFrame(utilization, columns=col)
 utilizationTable.index = row
-print(checkPackaging)
-print(utilizationTable)
+print('Used Packaging: \n', usedPackagingMatrix_1)
+print('Check Packaging: \n', checkPackaging)
+print('Utilization: \n', utilizationTable)
 
 def create_woorkbook():
 
-    packagingRange = np.array([10, 20, 30, 40])
-    a = -1
     workbook = pd.ExcelWriter('XTR_box.xlsx', engine='xlsxwriter')
-    #workbook = xl.Workbook('XTR_box.xlsx')
+
     checkPackaging.to_excel(workbook, sheet_name='Check Packaging', index=row)
     utilizationTable.to_excel(workbook, sheet_name='Utilization Table', index=row)
     usedPackagingMatrix_1.to_excel(workbook, sheet_name='Used Packaging Table', index=row)
-    # for p in packagingRange:
-    #     a = a + 1
-    #     sheet_name = str(packagingRange[a])
-    #     worksheet = workbook.add_worksheet(sheet_name + '%')
 
     workbook.close()
 
-    box_data = pd.read_excel('/Users/alexjette/Documents/Exjobb/XTR_box.xlsx')
+    box_data = pd.read_excel('/Users/alexjette/Documents/GitHub/Exjobb/XTR_box.xlsx')
     print(box_data)
 
 create_woorkbook()
