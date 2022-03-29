@@ -3,8 +3,8 @@ import pandas as pd
 from pandas_datareader import data as wb
 
 # Hämtar excelfilerna
-article_data = pd.read_excel('Articles.xlsx') #/Users/alexjette/Documents/Exjobb/
-boxes_data = pd.read_excel('Boxes.xlsx')
+article_data = pd.read_excel('Articles.xlsx')
+boxes_data = pd.read_excel('Boxes.xlsx', 'All packaging') # Standard packaging
 
 # Gör excelfilerna till pandas.DataFrame
 article_df = pd.DataFrame(article_data)
@@ -71,19 +71,7 @@ for index, row in boxes_df.iterrows():
 #print(allowedPackaging)
 #print(utilization)
 
-#Skapar random partDemand och packaging tills vi fått datan
-import random
+packaging = np.array(boxes_df['Boxes'])
 
-partDemand = []
-packaging = []
-
-package = 0
-
-for a in range(0, len(article_df)):
-    rand_demand = random.randint(10,25)
-    package += 1
-    packaging.append(package)
-    partDemand.append(rand_demand)
-
-#print(f'Packaging: {packaging}')
+print(f'Packaging: {packaging}')
 #print(f'PartDemand: {partDemand}')
