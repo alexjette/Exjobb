@@ -83,10 +83,10 @@ print('\nAverage utilization: %g' % results)
 print('SOLUTION:')
 for l in range(num_packaging):
     if openPackaging[l].X > 0.99:
-        print('Packaging %s used' % l)
+        print('Packaging %s used' % packaging[l])
         for k in range(num_parts):
             if usedPackagingMatrix[l,k].X > 0:
                 print('  Part %g use packaging %s' %
-                      (k, l))
+                      (k, packaging[l]))
     else:
-        print('Packaging %s not used!' % l)
+        print('Packaging %s not used!' % packaging[l])
