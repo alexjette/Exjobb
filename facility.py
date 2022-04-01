@@ -17,7 +17,7 @@ from tables import article_df
 num_packaging = len(packaging)
 num_parts = len(article_df)
 #num_parts = len(partDemand)
-n = 10
+n = 50
 
 # Model
 m = gp.Model("facility")
@@ -36,7 +36,7 @@ usedPackagingMatrix = m.addMVar((num_packaging,num_parts),vtype=GRB.BINARY, name
 m.ModelSense = gp.GRB.MAXIMIZE
 
 # The objective function takes into consideration the utilizations and allowed packaging
-obj1 = gp.quicksum(partDemand[k]*openPackaging[l]*usedPackagingMatrix[l,k]*utilization[l,k]*allowedPackaging[l,k] for l in range(num_packaging) for k in range(num_parts))
+obj1 = gp.quicksum(partDemand[k]*usedPackagingMatrix[l,k]*utilization[l,k] for l in range(num_packaging) for k in range(num_parts))
 obj2 = gp.quicksum(openPackaging[l] for l in range(num_packaging))
 m.setObjective(obj1-obj2*0.00000001)
 
@@ -49,6 +49,12 @@ m.addConstrs(con1)
 # Limit the number of packaging to n
 con2 = (sum(openPackaging[l] for l in range(num_packaging)) <= n)
 m.addConstr(con2)
+
+con3 = (usedPackagingMatrix[l,k] <= openPackaging[l] for l in range(num_packaging) for k in range(num_parts))
+m.addConstrs(con3)
+
+con4 = (usedPackagingMatrix[l,k] <= allowedPackaging[l,k] for l in range(num_packaging) for k in range(num_parts))
+m.addConstrs(con4)
 
 # Vary the number of packaging (n) here?
 # Re-write model and re-do optimization for new n
