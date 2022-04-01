@@ -17,7 +17,7 @@ from tables import article_df
 num_packaging = len(packaging)
 num_parts = len(article_df)
 #num_parts = len(partDemand)
-n = 50
+n = 10
 
 # Model
 m = gp.Model("facility")
@@ -86,11 +86,10 @@ m.Params.Method = 2
 
 # Solve
 m.optimize()
-units = 0
-for l in range(num_packaging):
-    units += partDemand[l]
 
-results = m.ObjVal/units
+tot_units = sum(partDemand)
+
+results = m.ObjVal/tot_units
 # Print solution
 print('\nAverage utilization: %g' % results)
 print('SOLUTION:')

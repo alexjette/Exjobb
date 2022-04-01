@@ -3,7 +3,7 @@ import pandas as pd
 from pandas_datareader import data as wb
 
 # Hämtar excelfilerna
-article_data = pd.read_excel('Articles.xlsx')
+article_data = pd.read_excel('Articles_stora.xlsx')
 boxes_data = pd.read_excel('Boxes.xlsx', 'All packaging') # Standard packaging
 
 # Gör excelfilerna till pandas.DataFrame
