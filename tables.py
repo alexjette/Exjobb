@@ -73,7 +73,7 @@ for index, row in boxes_df.iterrows():
 
 articles = np.array(article_df['Articles'])
 packaging = np.array(boxes_df['Boxes'])
-partDemand = np.array(['orders'])
+partDemand = np.array(article_df['orders']).transpose()
 #print(f'Articles: {articles}')
 #print(f'Packaging: {packaging}')
-#print(f'Demand: {partDemand}')
+print(f'Demand: {partDemand}')
