@@ -17,7 +17,7 @@ from tables import article_df
 num_packaging = len(packaging)
 num_parts = len(article_df)
 #num_parts = len(partDemand)
-n = 2
+n = 10
 
 # Model
 m = gp.Model("facility")
@@ -34,6 +34,7 @@ usedPackagingMatrix = m.addMVar((num_packaging,num_parts),vtype=GRB.BINARY, name
 
 # The objective is to minimize waste / maximize utilization
 m.ModelSense = gp.GRB.MAXIMIZE
+
 
 # The objective function takes into consideration the utilizations and allowed packaging
 obj1 = gp.quicksum(openPackaging[l]*usedPackagingMatrix[l,k]*utilization[l,k]*allowedPackaging[l,k] for l in range(num_packaging) for k in range(num_parts))
