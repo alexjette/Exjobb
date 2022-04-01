@@ -73,14 +73,6 @@ for index, row in boxes_df.iterrows():
 
 articles = np.array(article_df['Articles'])
 packaging = np.array(boxes_df['Boxes'])
+partDemand = np.array(['Orders'])
 #print(f'Articles: {articles}')
 #print(f'Packaging: {packaging}')
-
-pi = 0
-partDemand = []
-
-for a in range(0, len(article_df)):
-    partDemand.append(pi)
-    pi += 1
-
-#print(f'PartDemand: {partDemand}')
