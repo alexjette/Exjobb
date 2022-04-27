@@ -7,11 +7,11 @@ from gurobipy import GRB
 import numpy as np
 
 # Import matrix from tables.py (put them in the same map)
-from tables import allowedPackaging
-from tables import utilization
-from tables import partDemand
-from tables import packaging
-from tables import article_df
+from tables_volume import allowedPackaging
+from tables_volume import volume
+from tables_volume import partDemand
+from tables_volume import packaging
+from tables_volume import article_df
 
 # Range of plants and warehouses
 num_packaging = len(packaging)
@@ -33,10 +33,10 @@ usedPackagingMatrix = m.addMVar((num_packaging,num_parts),vtype=GRB.BINARY, name
 # objective
 
 # The objective is to minimize waste / maximize utilization
-m.ModelSense = gp.GRB.MAXIMIZE
+m.ModelSense = gp.GRB.MINIMIZE
 
 # The objective function takes into consideration the utilizations and allowed packaging
-obj1 = gp.quicksum(partDemand[k]*usedPackagingMatrix[l,k]*utilization[l,k] for l in range(num_packaging) for k in range(num_parts))
+obj1 = gp.quicksum(partDemand[k]*usedPackagingMatrix[l,k]*volume[l,k] for l in range(num_packaging) for k in range(num_parts))
 obj2 = gp.quicksum(openPackaging[l] for l in range(num_packaging))
 m.setObjective(obj1-obj2*0.00000001)
 
@@ -89,9 +89,9 @@ m.optimize()
 
 tot_units = sum(partDemand)
 
-results = m.ObjVal/tot_units
+results = (m.ObjVal/tot_units)*(pow(10,-9))
 # Print solution
-print('\nAverage utilization: %g %' % results)
+print('\nAverage waste per unit: %g m^3' % results)
 print('SOLUTION:')
 for l in range(num_packaging):
     if openPackaging[l].X > 0.99:

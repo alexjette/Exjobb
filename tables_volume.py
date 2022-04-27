@@ -12,7 +12,7 @@ boxes_df = pd.DataFrame(boxes_data)
 
 # Skapar två nollmatriser med antal rader = antar lådor och kolumner = antal artiklar (rader, kolumner)
 allowedPackaging = np.zeros((len(boxes_df),len(article_df)))
-utilization = np.zeros((len(boxes_df),len(article_df)))
+volume = np.zeros((len(boxes_df),len(article_df)))
 
 # Skapar indexvariabler
 box_index = -1
@@ -36,32 +36,32 @@ for index, row in boxes_df.iterrows():
         # För given låda och artikel testas de 6 kombinationer av intresse för att avgöra om artiklen kan få plats i lådan
         if box_height > row['height'] and box_width > row['width'] and box_length > row['length']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
+            volume[box_index, article_index] = (box_height * box_width * box_length) - (row['height'] * row['width'] * row['length'])
             #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
             #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
         elif box_height > row['length'] and box_width > row['width'] and box_length > row['height']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
+            volume[box_index, article_index] = (box_height * box_width * box_length) - (row['height'] * row['width'] * row['length'])
             #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
             #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
         elif box_height > row['width'] and box_width > row['height'] and box_length > row['length']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
+            volume[box_index, article_index] = (box_height * box_width * box_length) - (row['height'] * row['width'] * row['length'])
             #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
             #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
         elif box_height > row['length'] and box_width > row['height'] and box_length > row['width']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
+            volume[box_index, article_index] = (box_height * box_width * box_length) - (row['height'] * row['width'] * row['length'])
             #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
             #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
         elif box_height > row['width'] and box_width > row['length'] and box_length > row['height']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
+            volume[box_index, article_index] = (box_height * box_width * box_length) - (row['height'] * row['width'] * row['length'])
             #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
             #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
         elif box_height > row['height'] and box_width > row['length'] and box_length > row['width']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
+            volume[box_index, article_index] = (box_height * box_width * box_length) - (row['height'] * row['width'] * row['length'])
             #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
             #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
         #else:
