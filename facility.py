@@ -90,17 +90,18 @@ m.optimize()
 tot_units = sum(partDemand)
 
 results = m.ObjVal/tot_units
+print(f'Results {results}')
 # Print solution
-print('\nAverage utilization: %g %' % results)
+#print('\nAverage utilization: %g %' % results)
 print('SOLUTION:')
 for l in range(num_packaging):
     if openPackaging[l].X > 0.99:
         print('Packaging %s used' % packaging[l])
 #        print('  Parts in packaging %s : %g' %
 #                      (packaging[l], gp.quicksum(usedPackagingMatrix[l,k] for k in range(num_parts))
-        #for k in range(num_parts):
-        #    if usedPackagingMatrix[l,k].X > 0:
-        #        print('  Part %g use packaging %s' %
-        #              (k, packaging[l]))
+        for k in range(num_parts):
+            if usedPackagingMatrix[l,k].X > 0:
+               print('  Part %g use packaging %s' %
+                     (k, packaging[l]))
     #else:
-    #    print('Packaging %s not used!' % packaging[l])
+       #print('Packaging %s not used!' % packaging[l])
