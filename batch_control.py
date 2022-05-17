@@ -3,13 +3,13 @@ import pandas as pd
 from pandas_datareader import data as wb
 
 # Hämtar excelfilerna
-article_data = pd.read_excel('Articles_ny.xlsx', 'Big+XTR')
-boxes_data = pd.read_excel('Boxes.xlsx', 'Standard packaging') # Standard packaging
+article_data = pd.read_excel('Batchsnurra.xlsx', 'Artikelmått')
+boxes_data = pd.read_excel('Batchsnurra.xlsx', 'Boxtype')
 
 # Gör excelfilerna till pandas.DataFrame
 article_df = pd.DataFrame(article_data)
 boxes_df = pd.DataFrame(boxes_data)
-
+print(boxes_df)
 # Skapar två nollmatriser med antal rader = antar lådor och kolumner = antal artiklar (rader, kolumner)
 allowedPackaging = np.zeros((len(boxes_df),len(article_df)))
 utilization = np.zeros((len(boxes_df),len(article_df)))
@@ -68,14 +68,36 @@ for index, row in boxes_df.iterrows():
             #print('NOT OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
 
 # Printar matriserna
-#print(allowedPackaging)
-#print(utilization)
+print(allowedPackaging)
+print(utilization)
 
 articles = np.array(article_df['Articles'])
-packaging = np.array(boxes_df['Boxes'])
-partDemand = np.array(article_df['orders'])
+box_types = np.array(boxes_df['Loctype'])
+#partDemand = np.array(article_df['orders'])
 
-# Testa så att en artikel får plats
-# Kolla volymutnyttjande för hela kvantiteten < 1
-# Välj låda med bäst volymutnyttjande
-# Jämför med vart artikeln ligger idag
+col = []
+row = []
+col_index = 0
+row_index = 0
+
+for a in articles:
+    col.append(f'Article {str(articles[col_index])}')
+    col_index += 1
+
+for p in box_types:
+    row.append(f'{str(box_types[row_index])}')
+    row_index += 1
+
+# demand_table = pd.DataFrame(partDemand, columns=['Demand'])
+# demand_table.index = col
+#usedPackagingMatrix_1 = pd.DataFrame(usedPackagingMatrix.x, columns=col)
+#usedPackagingMatrix_1.index = row
+checkBox = pd.DataFrame(allowedPackaging, columns=col)
+checkBox.index = row
+utilizationTable = pd.DataFrame(utilization, columns=col)
+utilizationTable.index = row
+
+print(checkBox)
+print(utilizationTable)
+
+print(utilizationTable['Article 1'].idxmax())
