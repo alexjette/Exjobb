@@ -5,6 +5,8 @@ from itertools import product
 import gurobipy as gp
 from gurobipy import GRB
 import numpy as np
+import xlsxwriter as xl
+import pandas as pd
 
 # Import matrix from tables.py (put them in the same map)
 from tables_volume import allowedPackaging
@@ -96,11 +98,41 @@ print('SOLUTION:')
 for l in range(num_packaging):
     if openPackaging[l].X > 0.99:
         print('Packaging %s used' % packaging[l])
-#        print('  Parts in packaging %s : %g' %
-#                      (packaging[l], gp.quicksum(usedPackagingMatrix[l,k] for k in range(num_parts))
-        #for k in range(num_parts):
-        #    if usedPackagingMatrix[l,k].X > 0:
-        #        print('  Part %g use packaging %s' %
-        #              (k, packaging[l]))
+        # print('  Parts in packaging %s : %g' %
+        #               (packaging[l], gp.quicksum(usedPackagingMatrix[l,k] for k in range(num_parts))))
+        for k in range(num_parts):
+           if usedPackagingMatrix[l,k].X > 0:
+               print('  Part %g use packaging %s' %
+                     (k, packaging[l]))
     #else:
     #    print('Packaging %s not used!' % packaging[l])
+box_selection = pd.DataFrame(usedPackagingMatrix.getAttr("x"))
+
+# col = []
+# row = []
+# col_index = 0
+# row_index = 0
+#
+# for a in articles:
+#     col.append(f'Article {str(articles[col_index])}')
+#     col_index += 1
+#
+# for p in packaging:
+#     row.append(f'Box {str(packaging[row_index])}')
+#     row_index += 1
+
+def create_woorkbook():
+
+    workbook = pd.ExcelWriter('Facility_Volume.xlsx', engine='xlsxwriter')
+
+    box_selection.to_excel(workbook, sheet_name='Box Selection')
+    #utilizationTable.to_excel(workbook, sheet_name='Utilization Table', index=row)
+    #usedPackagingMatrix_1.to_excel(workbook, sheet_name='Used Packaging Table', index=row)
+    #demand_table.to_excel(workbook, sheet_name='Demand Table', index=col)
+
+    workbook.close()
+
+    box_selected = pd.read_excel('/Users/alexjette/Documents/GitHub/Exjobb/Facility_Volume.xlsx')
+    print(box_selected)
+
+create_woorkbook()
