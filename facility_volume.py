@@ -19,7 +19,7 @@ from tables_volume import article_df
 num_packaging = len(packaging)
 num_parts = len(article_df)
 #num_parts = len(partDemand)
-n = 10
+n = 24
 
 # Model
 m = gp.Model("facility")
