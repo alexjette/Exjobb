@@ -9,7 +9,7 @@ boxes_data = pd.read_excel('Batchsnurra.xlsx', 'Boxtype')
 # Gör excelfilerna till pandas.DataFrame
 article_df = pd.DataFrame(article_data)
 boxes_df = pd.DataFrame(boxes_data)
-print(boxes_df)
+#print(boxes_df)
 # Skapar två nollmatriser med antal rader = antar lådor och kolumner = antal artiklar (rader, kolumner)
 allowedPackaging = np.zeros((len(boxes_df),len(article_df)))
 utilization = np.zeros((len(boxes_df),len(article_df)))
@@ -81,7 +81,7 @@ col_index = 0
 row_index = 0
 
 for a in articles:
-    col.append(f'Article {str(articles[col_index])}')
+    col.append(f'Part {str(articles[col_index])}')
     col_index += 1
 
 for p in box_types:
@@ -97,7 +97,29 @@ checkBox.index = row
 utilizationTable = pd.DataFrame(utilization, columns=col)
 utilizationTable.index = row
 
-print(checkBox)
-print(utilizationTable)
+#print(checkBox)
+#print(utilizationTable)
 
-print(utilizationTable['Article 1'].idxmax())
+#print(utilizationTable['Part 1'].idxmax())
+
+suggested_boxtype = pd.DataFrame(columns=["Articles","Boxtypes"])
+
+part = []
+box_type = []
+for part in col:
+    suggested_boxtype = suggested_boxtype.append({'Articles': part, 'Boxtypes': utilizationTable[part].idxmax()}, ignore_index=True)
+
+#print(suggested_boxtype)
+
+def create_woorkbook():
+
+    workbook = pd.ExcelWriter('Part_and_BoxType.xlsx', engine='xlsxwriter')
+
+    suggested_boxtype.to_excel(workbook, sheet_name='BoxType Selection')
+
+    workbook.close()
+
+    box_selected = pd.read_excel('/Users/alexjette/Documents/GitHub/Exjobb/Part_and_BoxType.xlsx')
+    print(box_selected)
+
+create_woorkbook()

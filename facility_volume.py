@@ -126,9 +126,6 @@ def create_woorkbook():
     workbook = pd.ExcelWriter('Facility_Volume.xlsx', engine='xlsxwriter')
 
     box_selection.to_excel(workbook, sheet_name='Box Selection')
-    #utilizationTable.to_excel(workbook, sheet_name='Utilization Table', index=row)
-    #usedPackagingMatrix_1.to_excel(workbook, sheet_name='Used Packaging Table', index=row)
-    #demand_table.to_excel(workbook, sheet_name='Demand Table', index=col)
 
     workbook.close()
 
