@@ -4,7 +4,7 @@ from pandas_datareader import data as wb
 
 # Hämtar excelfilerna
 article_data = pd.read_excel('Articles_ny.xlsx', 'Big+XTR')
-boxes_data = pd.read_excel('Boxes.xlsx', 'QPallet') # Standard packaging
+boxes_data = pd.read_excel('Boxes.xlsx', 'All packaging') # Standard packaging All packaging QPallet
 
 # Gör excelfilerna till pandas.DataFrame
 article_df = pd.DataFrame(article_data)
