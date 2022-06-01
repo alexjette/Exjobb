@@ -3,7 +3,7 @@ import pandas as pd
 from pandas_datareader import data as wb
 
 # Hämtar excelfilerna
-article_data = pd.read_excel('Batchsnurra.xlsx', 'Artikelmått')
+article_data = pd.read_excel('Batchsnurra.xlsx', 'Lagerdata')
 boxes_data = pd.read_excel('Batchsnurra.xlsx', 'Boxtype')
 
 # Gör excelfilerna till pandas.DataFrame
@@ -36,34 +36,52 @@ for index, row in boxes_df.iterrows():
         # För given låda och artikel testas de 6 kombinationer av intresse för att avgöra om artiklen kan få plats i lådan
         if box_height > row['height'] and box_width > row['width'] and box_length > row['length']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
-            #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
-            #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
+            if ((row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)) <= 1:
+                utilization[box_index, article_index] = (row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)
+            else:
+                utilization[box_index, article_index] = 0
+            # print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'], row['Capacity'])
+            # print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'] * row['Capacity'])
         elif box_height > row['length'] and box_width > row['width'] and box_length > row['height']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
-            #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
-            #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
+            if ((row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)) <= 1:
+                utilization[box_index, article_index] = (row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)
+            else:
+                utilization[box_index, article_index] = 0
+            # print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'], row['Capacity'])
+            # print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'] * row['Capacity'])
         elif box_height > row['width'] and box_width > row['height'] and box_length > row['length']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
-            #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
-            #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
+            if ((row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)) <= 1:
+                utilization[box_index, article_index] = (row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)
+            else:
+                utilization[box_index, article_index] = 0
+            # print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'], row['Capacity'])
+            # print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'] * row['Capacity'])
         elif box_height > row['length'] and box_width > row['height'] and box_length > row['width']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
-            #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
-            #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
+            if ((row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)) <= 1:
+                utilization[box_index, article_index] = (row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)
+            else:
+                utilization[box_index, article_index] = 0
+            # print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'], row['Capacity'])
+            # print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'] * row['Capacity'])
         elif box_height > row['width'] and box_width > row['length'] and box_length > row['height']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
-            #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
-            #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
+            if ((row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)) <= 1:
+                utilization[box_index, article_index] = (row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)
+            else:
+                utilization[box_index, article_index] = 0
+            # print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'], row['Capacity'])
+            # print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'] * row['Capacity'])
         elif box_height > row['height'] and box_width > row['length'] and box_length > row['width']:
             allowedPackaging[box_index, article_index] = 1
-            utilization[box_index, article_index] = (row['height'] * row['width'] * row['length']) / (box_height * box_width * box_length)
-            #print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
-            #print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'])
+            if ((row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)) <= 1:
+                utilization[box_index, article_index] = (row['height'] * row['width'] * row['length'] * row['Capacity']) / (box_height * box_width * box_length)
+            else:
+                utilization[box_index, article_index] = 0
+            # print('OK', box_height, box_width, box_length, row['height'], row['width'], row['length'], row['Capacity'])
+            # print(box_height * box_width * box_length, row['height'] * row['width'] * row['length'] * row['Capacity'])
         #else:
             #print('NOT OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
 
@@ -81,17 +99,13 @@ col_index = 0
 row_index = 0
 
 for a in articles:
-    col.append(f'Part {str(articles[col_index])}')
+    col.append(f'{col_index}-Part {str(articles[col_index])}')
     col_index += 1
 
 for p in box_types:
     row.append(f'{str(box_types[row_index])}')
     row_index += 1
 
-# demand_table = pd.DataFrame(partDemand, columns=['Demand'])
-# demand_table.index = col
-#usedPackagingMatrix_1 = pd.DataFrame(usedPackagingMatrix.x, columns=col)
-#usedPackagingMatrix_1.index = row
 checkBox = pd.DataFrame(allowedPackaging, columns=col)
 checkBox.index = row
 utilizationTable = pd.DataFrame(utilization, columns=col)
@@ -100,8 +114,6 @@ utilizationTable.index = row
 #print(checkBox)
 #print(utilizationTable)
 
-#print(utilizationTable['Part 1'].idxmax())
-
 suggested_boxtype = pd.DataFrame(columns=["Articles","Boxtypes"])
 
 part = []
@@ -109,7 +121,7 @@ box_type = []
 for part in col:
     suggested_boxtype = suggested_boxtype.append({'Articles': part, 'Boxtypes': utilizationTable[part].idxmax()}, ignore_index=True)
 
-#print(suggested_boxtype)
+print(suggested_boxtype)
 
 def create_woorkbook():
 
