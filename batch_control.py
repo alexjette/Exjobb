@@ -85,13 +85,11 @@ for index, row in boxes_df.iterrows():
         #else:
             #print('NOT OK', box_height, box_width, box_length, row['height'], row['width'], row['length'])
 
-# Printar matriserna
 print(allowedPackaging)
 print(utilization)
 
 articles = np.array(article_df['Articles'])
 box_types = np.array(boxes_df['Loctype'])
-#partDemand = np.array(article_df['orders'])
 
 col = []
 row = []
@@ -110,9 +108,6 @@ checkBox = pd.DataFrame(allowedPackaging, columns=col)
 checkBox.index = row
 utilizationTable = pd.DataFrame(utilization, columns=col)
 utilizationTable.index = row
-
-#print(checkBox)
-#print(utilizationTable)
 
 suggested_boxtype = pd.DataFrame(columns=["Articles","Boxtypes"])
 
