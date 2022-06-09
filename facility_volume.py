@@ -121,6 +121,7 @@ box_selection = pd.DataFrame(usedPackagingMatrix.getAttr("x"))
 #     row.append(f'Box {str(packaging[row_index])}')
 #     row_index += 1
 
+# Denna funktion skapar en excelfil med resultaten från optimeringen
 def create_woorkbook():
 
     workbook = pd.ExcelWriter('Facility_Volume.xlsx', engine='xlsxwriter')
@@ -132,4 +133,5 @@ def create_woorkbook():
     box_selected = pd.read_excel('/Users/alexjette/Documents/GitHub/Exjobb/Facility_Volume.xlsx')
     print(box_selected)
 
-create_woorkbook()
+# Ta bort "#" innan "create_woorkbook" för att utföra funktionen
+#create_woorkbook()
